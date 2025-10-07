@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitGenie Chatbot</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+body, html { margin:0; padding:0; height:100%; font-family:Arial; display:flex; justify-content:center; align-items:center; background:#f3f3f3; }
+.chat-wrapper { width:400px; height:600px; background:#fff; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.3); display:flex; flex-direction:column; padding:10px; box-sizing:border-box; }
+h2 { text-align:center; margin-bottom:10px; }
+#chat-box { flex:1; overflow-y:auto; border:1px solid #ccc; border-radius:10px; padding:10px; margin-bottom:10px; background:#fafafa; }
+#input-area-container { display:flex; flex-direction:column; width:100%; }
+.input-area { display:flex; margin-bottom:5px; }
+#userInput { flex:1; padding:8px; border-radius:8px; border:1px solid #ccc; font-size:16px; }
+#sendBtn { padding:8px 12px; margin-left:5px; border:none; border-radius:8px; background:#6a1b9a; color:white; font-weight:bold; cursor:pointer; }
+#sendBtn:hover { background:#4a148c; }
+#main-buttons, #sub-buttons { display:flex; flex-wrap:wrap; justify-content:space-between; margin-bottom:5px; }
+.main-btn, .sub-btn { flex:1 1 48%; min-width:80px; margin:3px 0; padding:8px 12px; border:none; border-radius:8px; background:#6a1b9a; color:white; font-weight:bold; cursor:pointer; }
+.main-btn:hover, .sub-btn:hover { background:#4a148c; }
+.user { text-align:right; color:#333; margin:5px 0; }
+.bot { text-align:left; color:#6a1b9a; margin:5px 0; }
+</style>
+</head>
+<body>
+<div class="chat-wrapper">
+    <h2>🤖 FitGenie</h2>
+    <div id="chat-box"></div>
+
+    <div id="input-area-container">
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type your message..." />
+            <button id="sendBtn">Send</button>
+        </div>
+
+        <div id="main-buttons" style="display:none;">
+            <button class="main-btn" data-category="workout">🏋️ Workout</button>
+            <button class="main-btn" data-category="diet">🥗 Diet</button>
+            <button class="main-btn" data-category="motivation">💡 Motivation</button>
+        </div>
+
+        <div id="sub-buttons" style="display:none;"></div>
+    </div>
+</div>
+
+<script>
+const buttons = {
+    workout: [
+        { text: "💪 Arms", msg: "arms" },
+        { text: "🦵 Legs", msg: "legs" },
+        { text: "🧘 Full Body", msg: "full body" },
+        { text: "🏋️ Muscle Gain", msg: "muscle gain workout" },
+        { text: "🔥 Fat Loss", msg: "fat loss workout" }
+    ],
+    diet: [
+        { text: "🥗 Veg Diet", msg: "veg diet" },
+        { text: "🍗 Non-Veg Diet", msg: "non veg diet" },
+        { text: "🏋️ Muscle Gain Diet", msg: "muscle gain diet" },
+        { text: "⚖️ Weight Loss Diet", msg: "weight loss diet" }
+    ],
+    motivation: [
+        { text: "💡 Motivation", msg: "motivate me" }
+    ]
+};
+
+function appendMessage(sender,message,type){
+    $('#chat-box').append('<p class="'+type+'"><strong>'+sender+':</strong> '+message+'</p>');
+    $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+}
+
+function sendMessage(msg=null){
+    const userMessage = msg || $('#userInput').val();
+    if(userMessage.trim()==='') return;
+    appendMessage('You',userMessage,'user');
+    $('#userInput').val('');
+    $.post("/get",{msg:userMessage},function(data){
+        appendMessage('FitGenie',data.response,'bot');
+        if(userMessage.toLowerCase().includes("hi") || userMessage.toLowerCase().includes("hello") || userMessage.toLowerCase().includes("hey")){
+            $('#main-buttons').fadeIn();
+        }
+    });
+}
+
+$('#sendBtn').click(()=>sendMessage());
+$('#userInput').keypress(e=>{if(e.which===13) sendMessage();});
+
+$('.main-btn').click(function(){
+    const category = $(this).data('category');
+    $('#sub-buttons').empty().fadeIn();
+    buttons[category].forEach(btn=>{
+        $('#sub-buttons').append('<button class="sub-btn" data-msg="'+btn.msg+'">'+btn.text+'</button>');
+    });
+});
+
+$('#sub-buttons').on('click','.sub-btn',function(){
+    const msg = $(this).data('msg');
+    sendMessage(msg);
+});
+</script>
+</body>
+</html>
