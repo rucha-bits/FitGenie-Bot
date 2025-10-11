@@ -7,6 +7,11 @@
   "workout_prompt": [
     "Which workout would you like? (arms / legs / full body / muscle gain / fat loss)"
   ],
+  "diet_prompt": [
+    "Which type of diet would you like? (veg / non-veg / muscle gain / weight loss)",
+    "I can suggest Veg, Non-Veg, Muscle Gain, or Weight Loss diets — which one interests you?",
+    "Let's fuel your body right! Choose a diet type — Veg, Non-Veg, Muscle Gain, or Weight Loss 🍎"
+  ],
   "workout_arms": [
     "💪 Arm Workout:\n- Push-ups (3x12)\n- Bicep curls (3x10)\n- Tricep dips (3x10)"
   ],
@@ -55,3 +60,4 @@
     "Hmm, I’m not sure. Try asking about exercises, diet, or motivation!"
   ]
 }
+
