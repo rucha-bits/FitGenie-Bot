@@ -17,17 +17,17 @@ def get_response(user_input):
         return random.choice(responses["greeting"]) + " What would you like today? Workout, Diet, or Motivation?"
    
     # ---------------- Diet Suggestions ----------------
-    if "diet" in user_input or "food" in user_input or "eat" in user_input:
-        if "weight" in user_input or "lose" in user_input:
-            return random.choice(responses["diet_weight_loss"])
-        elif "muscle" in user_input or "gain" in user_input:
-            return random.choice(responses["diet_muscle_gain"])
-        elif "non veg" in user_input or "non-vegetarian" in user_input:
-            return random.choice(responses["diet_nonveg"])
-        elif "veg" in user_input or "vegetarian" in user_input:
-            return random.choice(responses["diet_balanced"])
-        else:
-            return random.choice(responses["diet_balanced"])
+    elif "diet" in user_input or "food" in user_input or "eat" in user_input:
+    if "weight" in user_input or "lose" in user_input:
+        return random.choice(responses["diet_weight_loss"])
+    elif "muscle" in user_input or "gain" in user_input:
+        return random.choice(responses["diet_muscle_gain"])
+    elif "non veg" in user_input or "non-vegetarian" in user_input or "nonvegetarian" in user_input:
+        return random.choice(responses["diet_nonveg"])
+    elif "veg" in user_input or "vegetarian" in user_input:
+        return random.choice(responses["diet_balanced"])
+    else:
+        return random.choice(responses["diet_prompt"])
 
 
     # ---------------- Workout Suggestions ----------------
@@ -78,5 +78,6 @@ def chat():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
