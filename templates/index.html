@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitGenie Chatbot</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #5ee7df 0%, #b490ca 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .chat-container {
+            width: 400px;
+            height: 520px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin: 8px 0;
+            padding: 10px 14px;
+            border-radius: 20px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: #d1f5d3;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: #f0f0f0;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            background: #fff;
+        }
+
+        input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        button {
+            background: #5ee7df;
+            border: none;
+            padding: 8px 12px;
+            margin-left: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .option-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 5px;
+        }
+
+        .option-button {
+            background: #b490ca;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Initial main buttons (outside chat) */
+        .main-options {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .main-options button {
+            background: #b490ca;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 18px;
+            cursor: pointer;
+            font-size: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .main-options button:hover {
+            background: #9c77bb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <div class="bot-message message">👋 Hey, I'm FitGenie! What would you like today?</div>
+        </div>
+
+        <div class="input-area">
+            <input id="user-input" type="text" placeholder="Type your message...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <!-- Main buttons outside the chat window -->
+    <div class="main-options" id="main-options">
+        <button onclick="selectMainOption('Workout')">Workout</button>
+        <button onclick="selectMainOption('Diet')">Diet</button>
+        <button onclick="selectMainOption('Motivation')">Motivation</button>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById("chat-box");
+        const mainOptions = document.getElementById("main-options");
+        const userInput = document.getElementById("user-input");
+        const sendBtn = document.getElementById("send-btn");
+
+        // Append message to chat box
+        function appendMessage(text, sender) {
+            const message = document.createElement("div");
+            message.classList.add("message", sender === "user" ? "user-message" : "bot-message");
+            message.innerHTML = text;
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Append a set of buttons inside chat
+        function appendButtons(options, category) {
+            const buttonDiv = document.createElement("div");
+            buttonDiv.classList.add("option-buttons");
+
+            options.forEach(opt => {
+                const btn = document.createElement("button");
+                btn.classList.add("option-button");
+                btn.textContent = opt;
+                btn.onclick = () => handleButtonClick(opt, category);
+                buttonDiv.appendChild(btn);
+            });
+
+            chatBox.appendChild(buttonDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Handle top-level (Workout / Diet / Motivation)
+        function selectMainOption(option) {
+            appendMessage(option, "user");
+            mainOptions.style.display = "none";
+            sendToBackend(option);
+        }
+
+        // Handle sub-buttons (arms, diet types, etc.)
+        function handleButtonClick(option, category) {
+            appendMessage(option, "user");
+            sendToBackend(option);
+        }
+
+        // Send text input message
+        async function sendMessage() {
+            const msg = userInput.value.trim();
+            if (!msg) return;
+            appendMessage(msg, "user");
+            userInput.value = "";
+            await sendToBackend(msg);
+        }
+
+        // Common backend request handler
+        async function sendToBackend(message) {
+            const response = await fetch("/get", {
+                method: "POST",
+                body: new URLSearchParams({ msg: message }),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            });
+            const data = await response.json();
+
+            appendMessage(data.response, "bot");
+
+            const lowerMsg = message.toLowerCase();
+
+            // Only show sub-workout buttons if main category selected
+            if (lowerMsg === "workout") {
+                appendButtons(["Arms", "Legs", "Full Body", "Muscle Gain", "Fat Loss"], "workout");
+            } 
+            else if (lowerMsg === "diet") {
+                appendButtons(["Veg Diet", "Non Veg Diet", "Muscle Gain Diet", "Fat Loss Diet"], "diet");
+            } 
+            else if (lowerMsg === "motivation") {
+                appendButtons(["Motivate Me", "I Feel Lazy", "Fitness Quote"], "motivation");
+            }
+            // Do not show buttons for specific workout or diet choices
+        }
+
+        // Send message on button click or Enter key
+        sendBtn.addEventListener("click", sendMessage);
+        userInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") sendMessage();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+{
+  "greeting": [
+    "Hey there! I’m FitGenie 💪 — ready to guide your fitness journey! Please tell me what would you need assistance for today.",
+    "Hello! FitGenie here. Let’s crush those calories! Where should we start from?",
+    "Hi! I’m FitGenie. Want a workout or diet plan today?"
+  ],
+  "workout_prompt": [
+    "Which workout would you like? (arms / legs / full body / muscle gain / fat loss)"
+  ],
+  "diet_prompt": [
+    "Which type of diet would you like? (veg / non-veg / muscle gain / weight loss)",
+    "I can suggest Veg, Non-Veg, Muscle Gain, or Weight Loss diets — which one interests you?",
+    "Let's fuel your body right! Choose a diet type — Veg, Non-Veg, Muscle Gain, or Weight Loss 🍎"
+  ],
+  "workout_arms": [
+    "💪 Arm Workout:\n- Push-ups (3x12)\n- Bicep curls (3x10)\n- Tricep dips (3x10)"
+  ],
+  "workout_legs": [
+    "🦵 Leg Day Routine:\n- Squats (3x15)\n- Lunges (3x10)\n- Step-ups (3x10)\n- Calf Raises (3x20)"
+  ],
+  "workout_fullbody": [
+    "🧘 Full Body Workout:\n- Jumping Jacks (3x30s)\n- Squats (3x15)\n- Push-ups (3x10)\n- Plank (3x45s)"
+  ],
+  "workout_muscle": [
+    "💪 Muscle Gain Routine:\n- Deadlifts (3x8)\n- Bench Press (3x10)\n- Pull-ups (3x8)\n- Squats (3x12)"
+  ],
+  "workout_fat": [
+    "🔥 Fat Loss Routine:\n- Jump Rope (5 mins)\n- Burpees (3x12)\n- Mountain Climbers (3x15)\n- High Knees (3x30s)"
+  ],
+  "diet_balanced": [
+    "🥗 Balanced Veg Diet: Oats breakfast, veggies + protein lunch, light dinner.",
+    "🍃 Veg Diet: Brown rice, dal, mixed salad, fruits, and nuts.",
+    "🥦 Vegetarian Plan: Smoothie or oats in morning, vegetable curry + rice for lunch, salad in evening."
+  ],
+
+  "diet_nonveg": [
+    "🍗 Non-Veg Diet: Eggs for breakfast, chicken or fish with veggies for lunch, light dinner with protein.",
+    "🥩 Protein-rich Non-Veg Plan: Omelette, grilled fish or chicken, steamed vegetables.",
+    "🍖 Non-Veg Meal: Chicken salad or fish curry with rice, light protein snack in evening."
+  ],
+
+  "diet_muscle_gain": [
+    "💪 Muscle Gain Diet: Eggs, chicken, paneer/tofu, oats, nuts, and green veggies.",
+    "🏋️ Protein-packed plan: Breakfast: eggs/oats, Lunch: chicken/fish + rice, Snacks: nuts/protein shake, Dinner: paneer/tofu + veggies.",
+    "🥚 Muscle Gain Routine: High protein breakfast, lean meat or paneer lunch, protein-rich dinner."
+  ],
+
+  "diet_weight_loss": [
+    "⚡ Fat Loss Diet: Oats or smoothie for breakfast, salad with grilled chicken/fish or dal + veggies for lunch, light dinner.",
+    "🥗 Weight Loss Plan: High fiber breakfast, low-calorie lunch with lots of vegetables, soup or salad for dinner.",
+    "🍎 Fat Loss Routine: Avoid heavy carbs, include fruits, protein, and veggies throughout the day."
+  ],
+  "motivation": [
+    "Remember: The only bad workout is the one you didn’t do! 💪",
+    "Discipline beats motivation. Just start with 10 minutes!",
+    "Small steps every day = Big results tomorrow!"
+  ],
+  "motivation_lazy": [
+    "Don’t be lazy. Get up and crush those calories. Laziness is the biggest enemy."
+  ],
+  "progress": [
+    "That’s awesome! Keep it up and remember to stay hydrated 💧",
+    "Great progress! Don’t forget to celebrate small wins 🏆"
+  ],
+  "goodbye": [
+    "Goodbye! Stay fit and positive 🌿",
+    "See you later! Keep crushing those workouts 💪"
+  ],
+  "fallback": [
+    "Hmm, I’m not sure. Try asking about exercises, diet, or motivation!"
+  ]
+}
+
