@@ -17,18 +17,19 @@ def get_response(user_input):
         return random.choice(responses["greeting"]) + " What would you like today? Workout, Diet, or Motivation?"
    
     # ---------------- Diet Suggestions ----------------
-    elif "diet" in user_input or "food" in user_input or "eat" in user_input:
-    if "weight" in user_input or "lose" in user_input:
-        return random.choice(responses["diet_weight_loss"])
-    elif "muscle" in user_input or "gain" in user_input:
-        return random.choice(responses["diet_muscle_gain"])
-    elif "non veg" in user_input or "non-vegetarian" in user_input or "nonvegetarian" in user_input:
-        return random.choice(responses["diet_nonveg"])
-    elif "veg" in user_input or "vegetarian" in user_input:
-        return random.choice(responses["diet_balanced"])
-    else:
-        return random.choice(responses["diet_prompt"])
-
+    elif any(word in user_input for word in ["diet", "food", "eat"]):
+        # Specific types first
+        if "fat" in user_input or "loss" in user_input or "lose weight" in user_input or "weight loss" in user_input:
+            return random.choice(responses["diet_weight_loss"])
+        elif "muscle" in user_input or "gain" in user_input:
+            return random.choice(responses["diet_muscle_gain"])
+        elif "non veg" in user_input or "non-veg" in user_input or "nonvegetarian" in user_input:
+            return random.choice(responses["diet_nonveg"])
+        elif "veg" in user_input or "vegetarian" in user_input:
+            return random.choice(responses["diet_balanced"])
+        else:
+            # Only when user says just "diet" or general eating terms
+            return random.choice(responses["diet_prompt"])
 
     # ---------------- Workout Suggestions ----------------
     if "muscle" in user_input and "gain" in user_input:
@@ -45,9 +46,13 @@ def get_response(user_input):
         return random.choice(responses["workout_prompt"])
 
         # ---------------- Motivation ----------------
-    elif "motivate" in user_input or "lazy" in user_input:
+    if any(word in user_input for word in ["motivation", "motivate"]):
         return random.choice(responses["motivation"])
-
+    elif "i feel lazy" in user_input:
+        return random.choice(responses["motivation_lazy"])
+    elif "fitness quote" in user_input or "quote" in user_input:
+        return random.choice(responses["motivation"])
+    
     # ---------------- Progress Tracking ----------------
     elif "weight" in user_input or "lost" in user_input:
         return random.choice(responses["progress"])
